@@ -12,7 +12,7 @@ import "./Profile.css";
 function Profile() {
   const { state } = useCart();
   const { state: trackingState } = useTracking();
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
   const [userInfo, setUserInfo] = useState({
@@ -48,51 +48,66 @@ function Profile() {
       </motion.div>
       <div className="profile-content">
         <div className="profile-tabs">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`tab-btn ${activeTab === "profile" ? "active" : ""}`}
             onClick={() => setActiveTab("profile")}
+            aria-pressed={activeTab === "profile"}
           >
             Profile
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`tab-btn ${activeTab === "orders" ? "active" : ""}`}
             onClick={() => setActiveTab("orders")}
+            aria-pressed={activeTab === "orders"}
           >
             My Orders
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`tab-btn ${activeTab === "my-products" ? "active" : ""}`}
             onClick={() => setActiveTab("my-products")}
+            aria-pressed={activeTab === "my-products"}
           >
             My Products
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`tab-btn ${activeTab === "add-product" ? "active" : ""}`}
             onClick={() => setActiveTab("add-product")}
+            aria-pressed={activeTab === "add-product"}
           >
             Add Product
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className="tab-btn"
             onClick={() => handleNavigation("/dailyActivityCharts")}
           >
             Daily Activity
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className="tab-btn"
             onClick={() => handleNavigation("/productViewStatistics")}
           >
             Product Stats
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className="tab-btn"
             onClick={() => handleNavigation("/timeSpentStatistics")}
           >
             Time Stats
-          </button>
-          <button className="tab-btn" onClick={signOut}>
-            Sign Out
-          </button>
+          </motion.button>
         </div>
         {activeTab === "profile" ? (
           <motion.div
@@ -168,12 +183,19 @@ function Profile() {
                 {[...trackingState.orders].reverse().map((order) => (
                   <div key={order.id} className="order-item">
                     {order.products && order.products[0] && (
-                      <img src={order.products[0].image} alt={order.products[0].title} />
+                      <img
+                        src={order.products[0].image}
+                        alt={order.products[0].title}
+                      />
                     )}
                     <div className="order-details">
-                      <h3>{order.products && order.products[0] ? order.products[0].title : 'Order #' + order.id}</h3>
+                      <h3>
+                        {order.products && order.products[0]
+                          ? order.products[0].title
+                          : "Order #" + order.id}
+                      </h3>
                       <p>Status: {order.status}</p>
-                      <p>Total: ${order.total ? order.total.toFixed(2) : '0.00'}</p>
+                      <p>Total: ${order.total ? order.total.toFixed(2) : "0.00"}</p>
                       <p>Date: {new Date(order.timestamp).toLocaleDateString()}</p>
                     </div>
                   </div>
@@ -205,4 +227,4 @@ function Profile() {
   );
 }
 
-    export default Profile;
+export default Profile;
